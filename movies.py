@@ -78,7 +78,7 @@ class DoctorStrange(Movie, movies=movies):
 
 
 class GuardiansOfTheGalaxy(Movie, movies=movies):
-	name = 'Guardians of The Galaxy'
+	name = 'Guardians of the Galaxy'
 	years = ['2014', '2017']
 
 
