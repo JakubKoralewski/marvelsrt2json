@@ -64,7 +64,7 @@ print(f'Opening {len_files_to_scan} file(s) from "{subtitles_path.name}" and sav
 for i, file in enumerate(files_to_scan):
 	opened_path = Path(subtitles_path / file)
 	subs = pysrt.open(opened_path, encoding='UTF-8')
-	print(f'\rOpening {opened_path.name} {i+1}/{len_files_to_scan}',end="", flush=True)
+	print(f'Opening {opened_path.name} {i+1}/{len_files_to_scan}')
 	subtitles_list = []
 	index = -1
 	for sub in subs:
@@ -86,7 +86,10 @@ for i, file in enumerate(files_to_scan):
 		}
 		subtitles_list.append(sub)
 	movie_title = movie_matcher(file, movies)
+	print(f'Matched {movie_title}')
 	new_filename = movie_title + '.json'
 	
 	with open(Path(processed_path / new_filename), 'w+', encoding='UTF-8') as f:
 		json.dump(subtitles_list, f, ensure_ascii=False)
+		
+	print()

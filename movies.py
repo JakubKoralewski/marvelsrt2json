@@ -5,10 +5,7 @@ class Movie:
 	name = None
 	years = None
 	
-	def condition(self):
-		return lambda f: self.name.lower() in f
-	
-	def generate_condition(self, splitter):
+	def generate_condition(self, splitter=None):
 		"""
 		Returns a function that splits the movie name by given splitter
 		and if all parts of the movie title are in filename then that
@@ -16,7 +13,10 @@ class Movie:
 		:param splitter: a dash, a space
 		:return:
 		"""
-		return lambda f: all([x.lower() in f.lower() for x in self.name.split(splitter)])
+		if splitter is not None:
+			return lambda f: all([x.lower() in f.lower() for x in self.name.split(splitter)])
+		else:
+			return lambda f: self.name.lower() in f.lower()
 	
 	def __init_subclass__(cls, movies, *a, **kw):
 		super().__init_subclass__(**kw)
@@ -45,6 +45,8 @@ class Movie:
 			cls.condition = cls.generate_condition(cls, '-')
 		elif ' ' in cls.name:
 			cls.condition = cls.generate_condition(cls, ' ')
+		else:
+			cls.condition = cls.generate_condition(cls)
 		movies.append(cls)
 
 
